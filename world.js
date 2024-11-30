@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const lookupButton = document.getElementById('lookup');
+    const lookupCountryButton = document.getElementById('lookup-country');
+    const lookupCitiesButton = document.getElementById('lookup-cities');
+    const countryInput = document.getElementById('country');
     const resultDiv = document.getElementById('result');
 
-    lookupButton.addEventListener('click', function () {
-        const country = prompt("Enter a country name or leave blank to fetch all:");
+    function fetchData(lookupType) {
+        const country = countryInput.value.trim();
+        if (!country) {
+            resultDiv.innerHTML = 'Please enter a country name.';
+            return;
+        }
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `world.php?country=${encodeURIComponent(country)}`, true);
+        xhr.open('GET', `world.php?country=${encodeURIComponent(country)}&lookup=${lookupType}`, true);
 
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -21,5 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         xhr.send();
+    }
+
+    lookupCountryButton.addEventListener('click', function () {
+        fetchData('countries');
+    });
+
+    lookupCitiesButton.addEventListener('click', function () {
+        fetchData('cities');
     });
 });
+
