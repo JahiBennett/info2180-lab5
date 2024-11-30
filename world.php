@@ -20,9 +20,25 @@ if (isset($_GET['country']) && !empty($_GET['country'])) {
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<ul>
-<?php foreach ($results as $row): ?>
-  <li><?= htmlspecialchars($row['name']) . ' is ruled by ' . htmlspecialchars($row['head_of_state']); ?></li>
-<?php endforeach; ?>
-</ul>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Continent</th>
+            <th>Independence Year</th>
+            <th>Head of State</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($results as $row): ?>
+        <tr>
+            <td><?= htmlspecialchars($row['name']); ?></td>
+            <td><?= htmlspecialchars($row['continent']); ?></td>
+            <td><?= htmlspecialchars($row['independence_year'] ?? 'N/A'); ?></td>
+            <td><?= htmlspecialchars($row['head_of_state'] ?? 'N/A'); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 
